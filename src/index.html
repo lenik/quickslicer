@@ -26,11 +26,11 @@
             </svg>
         </a>
         <ul class="nav site-nav float-left">
-            <li><a>快刀布局</a>
+            <li><a href="#">快刀布局</a>
                 </li>
-            <li><a>保存</a>
+            <li><a :href="gallery">作品浏览</a>
                 </li>
-            <li><a>帮助</a>
+            <li><a :href="help">帮助</a>
                 </li>
         </ul>
         
@@ -67,56 +67,80 @@
             </div>
         </div>
         <nav id="proj-pager">
-            <a p='about'><i class="fa fa-info"></i>
+            <a href='about'><i class="fa fa-info"></i>
                 About</a>
-            <a p='options'><i class="fa fa-cog"></i>
+            <a href='options'><i class="fa fa-cog"></i>
                 Options</a>
-            <a p='editor' class="selected"><i class="fa fa-crop"></i>
+            <a href='editor' class="selected"><i class="fa fa-crop"></i>
                 Editor</a>
-            <a p='export'><i class="fa fa-save"></i>
+            <a href='export'><i class="fa fa-save"></i>
                 Export</a>
         </nav>
     </div>
     
-    <div id="pages">
-        <div page="about">
+    <div id="facets" class="stack">
+        <div k="about">
             <h2>About Quick Slicer</h2>
             
             <p>Quick slicer is a prototyping tool to initialize the layout of a web page.
             
         </div>
         
-        <div page="options">
+        <div k="options">
             <h2>Options</h2>
             
         </div>
         
-        <div page="editor" class="selected">
+        <div k="editor" class="selected" :data-state="state">
             <div class="toolbox">
-                <ul>
-                    <li data-state="select" class="selected"><i class="fa fa-mouse-pointer"></i>
+                <ul k="states">
+                    <li data-state="select" :class="{ selected: state=='select' }">
+                        <i class="fa fa-mouse-pointer"></i>
                         <span>Select</span>
-                    <li data-state="horiz"><i class="fa fa-minus-square-o"></i>
+                    <li data-state="horiz" :class="{ selected: state=='horiz' }">
+                        <i class="fa fa-minus-square-o"></i>
                         <span>Horizontal Line</span>
-                    <li data-state="vert"><i class="fa fa-columns"></i>
+                    <li data-state="vert" :class="{ selected: state=='vert' }">
+                        <i class="fa fa-columns"></i>
                         <span>Vertical Line</span>
-                    <li data-state="offset"><i class="fa fa-square-o"></i>
-                        <span>Container</span>
-                    <li data-state="erase"><i class="fa fa-eraser"></i>
+                    <li data-state="offset" :class="{ selected: state=='offset' }">
+                        <i class="fa fa-square-o"></i>
+                        <span>Offset Inside</span>
+                    <li data-state="erase" :class="{ selected: state=='erase' }">
+                        <i class="fa fa-eraser"></i>
                         <span>Eraser</span>
-                    <li data-action="choosebg"><i class="fa fa-image"></i>
-                        <span>Choose a background</span>
+                </ul>
+                <ul k="toggles">
+                    <li data-toggle="attributesView" :class="{ selected: attributesView }"
+                        title="Toggle attributes palette.">
+                        <i class="fa fa-list-alt"></i>
+                    <li data-toggle="useRatioDim" :class="{ selected: useRatioDim }"
+                        :title="'Using ' + (useRatioDim ? 'ratio percentige' : 'explicit size') + ' for dimensions.'">
+                        <i class="fa fa-percent"></i>
+                    <li data-toggle="toTheEnd" :class="{ selected: toTheEnd }"
+                        :title="'Dimension are measured ' + (toTheEnd ? 'to the end' : 'from the begin') + '.'">
+                        <i class="fa fa-exchange"></i>
+                    <li data-toggle="roundCorner" :class="{ selected: roundCorner }"
+                        title="Show block borders with a small round corner.">
+                        <i class="fa fa-circle-o"></i>
                 </ul>
             </div>
             
-            <div class="root k-horiz">
-                <div style="flex: 1"></div>
-                <div style="flex: 1"></div>
-                <div style="flex: 1"></div>
+            <div :class="{ root: 1, block: 1, cols: 1, round: roundCorner }"
+                    data-dir="cols" data-dim="ratio">
+                <div style="flex: 15" class="block" data-val="15">
+                    <div class="name">NAV#left</div>
+                </div>
+                <div style="flex: 70" class="block" data-val="70">
+                    <div class="name">DIV</div>
+                </div>
+                <div style="flex: 15" class="block" data-val="15">
+                    <div class="name">#right</div>
+                </div>
             </div>
         </div>
         
-        <div page="export">
+        <div k="export">
             <h2>Export to ...</h2>
             <ul id="filetype">
                 <li>Html</li>
@@ -128,8 +152,26 @@
         
     </div>
     
+    <div id="attrviews" :class="{palette: 1, visible: attributesView}">
+        <h3 class="title"><i class="fa fa-list-alt"></i>Attributes</h3>
+        
+        <div class="content stack">
+            <div k="root">
+                    <li @click="choosebg"><i class="fa fa-image"></i>
+                        <span>Choose a background</span>
+            </div>
+            
+            <div k="box" class="selected">
+                name
+                bgcolor-pick
+                border
+                content-html
+            </div>
+        </div>
+    </div>
+    
     <div id="footbar">
-        <div class="copyright">(C) Copyright LENIK</p>
+        <div class="copyright">(ↄ) Jun 2017 @_lenik</p>
     </div>
     
     <script type="text/javascript" src="index.js"></script>
