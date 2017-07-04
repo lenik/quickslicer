@@ -140,10 +140,12 @@ ul {
 }
 
 #footbar {
+    padding: 3px 2em;
     border-top: solid 1px #ccc;
     background: #eee;
-    padding: .5em 2em 1em;
+    color: gray;
     text-align: center;
+    font-family: Serif;
 }
 
 #facets {
@@ -199,7 +201,8 @@ ul {
                 }
             }
             [k=toggles] {
-                margin: 5px;
+                border-top: solid 1px gray;
+                padding: 5px;
                 text-align: center;
                 li {
                     display: inline-block;
@@ -208,6 +211,27 @@ ul {
                     width: 18px;
                     font-size: 16px;
                 }
+            }
+            
+            #compid {
+                padding: 4px;
+                font-family: Sans;
+                font-size: 16px;
+                text-align: center;
+                word-wrap: break-word;
+                word-break: break-all;
+                &:hover {
+                    background: #dff;
+                }
+            }
+            input.inlineEdit {
+                width: 100%;
+                padding: 3px;
+                font-family: Sans;
+                font-size: 16px;
+                text-align: left;
+                background: #dff;
+                border: none;
             }
         }
         

@@ -33,6 +33,10 @@ $(document).ready(function() {
     new Vue({ el: "#attrviews", data: app });
     
     $(document.body).keydown(function (e) {
+        var el = $(e.target);
+        if (el.hasClass("editable")) return;
+        if (el.is("input, select")) return;
+        
         switch (e.keyCode) {
         case 27: // ESC
         case 32: // SPC
@@ -289,6 +293,13 @@ $(document).ready(function() {
         var toggle = item.data("toggle");
         if (toggle != null)
             app[toggle] = ! app[toggle];
+    });
+
+    $(".toolbox #compid").inlineEdit(function(e, s) {
+        app.tag = s;
+    });
+    $(".toolbox #compid").keyup(function() {
+        app.tag = $(this).text();
     });
     
 });
