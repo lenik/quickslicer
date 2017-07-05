@@ -10,7 +10,7 @@
         <script type="text/javascript" src="libjs/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="libjs/jquery-ui/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libjs/createjs/tweenjs-0.6.2.min.js"></script>
-        <script type="text/javascript" src="libjs/vuejs/vue.min.js"></script>
+        <script type="text/javascript" src="libjs/vuejs/vue.js"></script>
     </head>
 <body class="clear-each">
     
@@ -25,7 +25,7 @@
                 <path d="M477.2,10c0,0-81.3,6.7-96.4,85.5c-15,78.8,36,108.1,75.4,147.5c39.3,39.3,22.6,113-21.8,165.1c0,0,79.6-27.7,98-103.9c18.4-76.3-19-103.1-57.7-147.4C435.8,112.3,439.4,31.8,477.2,10z"/>
             </svg>
         </a>
-        <ul class="nav site-nav float-left">
+        <ul class="span site-nav float-left">
             <li><a href="#">快刀布局</a>
                 </li>
             <li><a :href="gallery">作品浏览</a>
@@ -34,7 +34,7 @@
                 </li>
         </ul>
         
-        <ul class="nav site-nav user-nav float-right">
+        <ul class="span site-nav user-nav float-right">
             <li><a><i class="fa fa-bell"></i></a>
                 </li>
             <li><a><i class="fa fa-user"></i></a>
@@ -46,13 +46,16 @@
     <div id="projbar" class="clear-each">
         <div id="proj-overall" class="overflow-auto">
             <div class="float-left">
-                <h2>Project</h2>
-                <div class="subtitle">A small description of the project.</div>
+                <h2 class="editable">Starter's Web</h2>
+                <div class="editable subtitle">
+                    An initial web page sliced by Quick Slicer.
+                    Created at {{ new Date().toDateString() }}.
+                    </div>
             </div>
-            <div class="float-right">
-                <ul class="nav proj-overall-btns">
+            <div k="stats">
+                <ul class="span proj-overall-btns">
                     <li class="counter-pair">
-                        <span class="name"><i class="fa fa-eye"></i>View</span>
+                        <span class="name"><i class="fa fa-envelope-open-o"></i>View</span>
                         <span class="val">#</span>
                         </li>
                     <li class="counter-pair">
@@ -73,55 +76,69 @@
                 Options</a>
             <a href='editor' class="selected"><i class="fa fa-crop"></i>
                 Editor</a>
+            <a href='preview'><i class="fa fa-eye"></i>
+                Preview</a>
             <a href='export'><i class="fa fa-save"></i>
                 Export</a>
         </nav>
     </div>
     
     <div id="facets" class="stack">
-        <div k="about">
+        <div k="about" :class="{selected: facet=='about'}">
             <h2>About Quick Slicer</h2>
             
             <p>Quick slicer is a prototyping tool to initialize the layout of a web page.
             
+            <h3>TODO</h3>
+            <ol>
+                <li>Optionally use sequential generated IDs.
+                <li>Slightly different backgrounds for different tags.
+                <li>A simple web server to login and upload artworks.
+                <li>Write the help manual.
+                
+            </ol>
         </div>
         
-        <div k="options">
+        <div k="options" :class="{selected: facet=='options'}">
             <h2>Options</h2>
             
+            <ul>
+                <li>Show bounding boxes in the preview.
+                <li>Fill random colors of low saturation in the blocks.
+            </ul>
         </div>
         
-        <div k="editor" class="selected" :data-state="state">
+        <div k="editor" :class="{selected: facet=='editor'}" :data-state="state">
             <div class="toolbox">
-                <ul k="states">
-                    <li data-state="select" :class="{ selected: state=='select' }">
+                <ul class="div" k="states" data-control="combo" data-var="app.state">
+                    <li data-val="select" :class="{ selected: state=='select' }">
                         <i class="fa fa-mouse-pointer"></i>
                         <span>Select</span>
-                    <li data-state="horiz" :class="{ selected: state=='horiz' }">
+                    <li data-val="horiz" :class="{ selected: state=='horiz' }">
                         <i class="fa fa-minus-square-o"></i>
                         <span>Horizontal Line</span>
-                    <li data-state="vert" :class="{ selected: state=='vert' }">
+                    <li data-val="vert" :class="{ selected: state=='vert' }">
                         <i class="fa fa-columns"></i>
                         <span>Vertical Line</span>
-                    <li data-state="offset" :class="{ selected: state=='offset' }">
+                    <li data-val="offset" :class="{ selected: state=='offset' }">
                         <i class="fa fa-square-o"></i>
                         <span>Offset Inside</span>
-                    <li data-state="erase" :class="{ selected: state=='erase' }">
+                    <li data-val="erase" :class="{ selected: state=='erase' }">
                         <i class="fa fa-eraser"></i>
                         <span>Eraser</span>
                 </ul>
-                <div id="compid" class="editable">DIV</div>
-                <ul k="toggles">
-                    <li data-toggle="attributesView" :class="{ selected: attributesView }"
+                <div id="compid">div</div>
+                <ul class="span" k="toggles">
+                    <li data-toggle="app.attributesView" :class="{ selected: attributesView }"
                         title="Toggle attributes palette.">
                         <i class="fa fa-list-alt"></i>
-                    <li data-toggle="useRatioDim" :class="{ selected: useRatioDim }"
+                    <li data-toggle="app.useRatioDim" :class="{ selected: useRatioDim }"
                         :title="'Using ' + (useRatioDim ? 'ratio percentige' : 'explicit size') + ' for dimensions.'">
                         <i class="fa fa-percent"></i>
-                    <li data-toggle="toTheEnd" :class="{ selected: toTheEnd }"
+                    <li data-toggle="app.toTheEnd" :class="{ selected: toTheEnd }"
                         :title="'Dimension are measured ' + (toTheEnd ? 'to the end' : 'from the begin') + '.'">
                         <i class="fa fa-exchange"></i>
-                    <li data-toggle="roundCorner" :class="{ selected: roundCorner }"
+                    <li data-toggle="app.roundCorner" :class="{ selected: roundCorner }"
                         title="Show block borders with a small round corner.">
                         <i class="fa fa-circle-o"></i>
                 </ul>
@@ -130,10 +147,10 @@
             <div :class="{ root: 1, block: 1, cols: 1, round: roundCorner }"
                     data-dir="cols" data-dim="ratio">
                 <div style="flex: 15" class="block" data-val="15">
-                    <div class="name">NAV#left</div>
+                    <div class="name">ul#left</div>
                 </div>
                 <div style="flex: 70" class="block" data-val="70">
-                    <div class="name">DIV</div>
+                    <div class="name">div</div>
                 </div>
                 <div style="flex: 15" class="block" data-val="15">
                     <div class="name">#right</div>
@@ -141,19 +158,47 @@
             </div>
         </div>
         
-        <div k="export">
-            <h2>Export to ...</h2>
-            <ul id="filetype">
-                <li>Html</li>
-                <li>Scss</li>
-            </ul>
-            <div id="code">
+        <div k="export" :class="{selected: facet=='export'}">
+            <div class="flex">
+                <div id="filesel">
+                    Selection:
+                    <ul class="div" k="type" data-control="multi">
+                        <li data-var="app.ex.htmlSkel" :class="{ selected: ex.htmlSkel }">
+                            <i class="fa fa-html5"></i> .html file</li>
+                        <li data-var="app.ex.htmlCode" :class="{ selected: ex.htmlCode }">
+                            <i class="fa fa-code"></i> HTML code</li>
+                        <li data-var="app.ex.cssStyle" :class="{ selected: ex.cssStyle }">
+                            <i class="fa fa-code"></i> CSS &lt;style&gt;</li>
+                        <li data-var="app.ex.cssFile" :class="{ selected: ex.cssFile }">
+                            <i class="fa fa-css3"></i> .css file</li>
+                        <li data-var="app.ex.scssFile" :class="{ selected: ex.scssFile }">
+                            <i class="fa fa-css3"></i> .scss file</li>
+                    </ul>
+                    Libraries:
+                    <ul class="div" k="libjs">
+                        <li data-toggle="app.libjs.bootstrap" :class="{ selected: libjs.bootstrap }">Bootstrap</li>
+                        <li data-toggle="app.libjs.jquery" :class="{ selected: libjs.jquery }">jQuery</li>
+                        <li data-toggle="app.libjs.vuejs" :class="{ selected: libjs.vuejs }">Vue.js</li>
+                    </ul>
+                </div>
+                <div id="dump">
+                    <ul class="span toolbar">
+                        <li id="refresh-btn"><i class="fa fa-refresh"></i> Refresh</li>
+                        <li id="copy-btn"><i class="fa fa-copy"></i> Copy</li>
+                    </ul>
+                    <pre id="code">{{ buildCode() }}</pre>
+                </div>
             </div>
+        </div>
+        
+        <div k="preview" :class="{selected: facet=='preview'}">
+            <iframe>
+            </iframe>
         </div>
         
     </div>
     
-    <div id="attrviews" :class="{palette: 1, visible: attributesView}">
+    <div id="attrviews" :class="{palette: 1, hidden: !attributesView}">
         <h3 class="title"><i class="fa fa-list-alt"></i>Attributes</h3>
         
         <div class="content stack">
@@ -175,7 +220,12 @@
         <div class="copyright">(ↄ) Jun 2017 @_lenik</div>
     </div>
     
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="js/clipboard.js"></script>
+    <script type="text/javascript" src="js/html.js"></script>
     <script type="text/javascript" src="js/inlineEdit.js"></script>
+    <script type="text/javascript" src="js/strfn.js"></script>
+    <script type="text/javascript" src="libjs/tidy.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+
 </body>
 </html>

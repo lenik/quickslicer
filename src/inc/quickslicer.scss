@@ -1,0 +1,38 @@
+.root {
+    position: absolute !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: solid 3px #bbb;
+    background: #fffafa;
+    display: flex;
+    
+    &.round .block {
+        border-radius: 10px;
+        > .name {
+            border-radius: 10px 0 0 0;
+        }
+    }
+}
+
+.block {
+    display: flex;
+    position: relative;
+    
+    &.selected {
+        background-color: #fee;
+    }
+    
+    &.cols {
+        flex-direction: row;
+        > .block { border-right: solid 1px gray; }
+    }
+    
+    &.rows {
+        flex-direction: column;
+        > .block { border-bottom: solid 1px gray; }
+    }
+    
+}
+

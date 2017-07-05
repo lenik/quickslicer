@@ -1,10 +1,11 @@
 SCSS = scss
-SCSSFLAGS = -I /usr/share/javascript/zwk
+SCSSFLAGS = -I /usr/share/javascript/zwk --sourcemap=none
 
 all-css: \
-    index.css
+    index.css \
+    inc/quickslicer.css
 
-%.css: %.scss config.scss /usr/share/javascript/zwk
+%.css: %.scss config.scss /usr/share/javascript/zwk inc/
 	$(SCSS) $(SCSSFLAGS) $< $@
 	# mvn-copytotarget "$@"
 
@@ -15,6 +16,7 @@ clean:
 auto-build:
 	onchange \
 	    -f . \
+	    -f inc \
 	    -f /usr/share/javascript/zwk \
         make
 

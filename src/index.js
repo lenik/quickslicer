@@ -1,12 +1,49 @@
+
+function resolvVar(path, start) {
+    if (start == null)
+        start = window;
+    var offset = 0;
+    while (start != null) {
+        var dot = path.indexOf('.', offset);
+        if (dot == -1)
+            break;
+        var head = path.substr(0, dot);
+        path = path.substr(dot + 1);
+        start = start[head];
+    }
+    return { ctx: start, path: path, value: start[path] };
+}
+
+function writeVar(path, value, start) {
+    var v = resolvVar(path, start);
+    v.ctx[v.path] = value;
+}
+
 $(document).ready(function() {
     
     appModel = {
+        facet: 'editor',
         state: 'select',
         attributesView: false,
         dim: 'ratio',
         toTheEnd: false,
         roundCorner: false,
-        tag: "DIV",
+        tag: "div",
+        
+        ex: {
+            htmlSkel: true,
+            htmlCode: false,
+            cssStyle: false,
+            cssFile: false,
+            scssFile: false
+        },
+        
+        libjs: {
+            bootstrap: true,
+            jquery: true,
+            vuejs: true
+        },
+        
         init: function(s) {
             this.state = s;
             $(".block.selected").removeClass("selected");
@@ -24,12 +61,43 @@ $(document).ready(function() {
             }
         },
         methods: {
+            buildCode: function() {
+                var map = buildHtml(this);
+                var sb = "";
+                {
+                    if (this.ex.htmlSkel)
+                        sb += map.html;
+                        
+                    if (this.ex.htmlCode)
+                        sb += map.body;
+                        
+                    if (this.ex.cssStyle) {
+                        var style = "<style>\n";
+                        style += map.css;
+                        style += "</style>";
+                        sb += style;
+                    }
+                    if (this.ex.cssFile)
+                        sb += map.css;
+                }
+                
+                // Update preview frame.
+                var iframe = $("[k=preview] iframe")[0];
+                    // IE7: contentDocument not work.
+                    var iframedoc = iframe.contentWindow.document;
+                    // iframedoc.documentElement.innerHTML = html;
+                    iframedoc.write(map.html);
+                    
+                return sb;
+            },
+            
             choosebg: function(e) {
                 alert("bg");
             }
         }
     });
     
+    new Vue({ el: "#projbar", data: app });
     new Vue({ el: "#attrviews", data: app });
     
     $(document.body).keydown(function (e) {
@@ -111,9 +179,7 @@ $(document).ready(function() {
         item.addClass("selected");
         
         var k = $(this).attr('href');
-        $("#facets > *").removeClass('selected');
-        $("#facets > [k=" + k + "]").addClass('selected');
-        
+        app.facet = k;
         return false;
     });
     
@@ -282,24 +348,49 @@ $(document).ready(function() {
             break;
         }
     });
-    
-    $(".toolbox li").click(function() {
+
+    $("[data-control=combo] [data-val]").click(function() {
         var item = $(this);
-        var state = item.data("state");
-        if (state != null) {
-            app.init(state);
+        var val = item.data("val");
+        var control = item.parent("[data-control]");
+        var path = control.data("var");
+        var v = resolvVar(path);
+        v.ctx[v.path] = val;
+        if (path == "app.state") {
+            app.init(val);
         }
+    });
         
-        var toggle = item.data("toggle");
-        if (toggle != null)
-            app[toggle] = ! app[toggle];
+    $("[data-toggle]").click(function() {
+        var item = $(this);
+        var path = item.data("toggle");
+        var v = resolvVar(path);
+        v.ctx[v.path] = ! v.value;
     });
 
-    $(".toolbox #compid").inlineEdit(function(e, s) {
-        app.tag = s;
+    $(".editable").inlineEdit();
+    $(".toolbox #compid").inlineEdit(function(e, s) { app.tag = s; });
+    
+    $("[data-control=multi] [data-var]").click(function(e) {
+        var toggle = $(this).data("toggle");
+        var single = ! e.ctrlKey;
+        if (single)
+            $(this).siblings().each(function() {
+                var path = $(this).data("var");
+                writeVar(path, false);
+            });
+        var path = $(this).data("var");
+        var v = resolvVar(path);
+        v.ctx[v.path] = single ? true : !v.value;
     });
-    $(".toolbox #compid").keyup(function() {
-        app.tag = $(this).text();
+
+    $("#refresh-btn").click(function() {
+        app.$forceUpdate();
+    });
+    
+    $("#copy-btn").click(function() {
+        var code = $("#code").text();
+        Clipboard.set(code);
     });
     
 });
