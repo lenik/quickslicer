@@ -9,7 +9,7 @@
     $.fn.inlineEdit = function(callback) {
         $(this).click(function() {
             var el = $(this);
-            input.val(el.text());
+            input.val(el.text().trim());
             
             for (var i = 0; i < csscopies.length; i++) {
                 var k = csscopies[i];

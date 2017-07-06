@@ -28,7 +28,11 @@ $(document).ready(function() {
         dim: 'ratio',
         toTheEnd: false,
         roundCorner: false,
-        tag: "div",
+        showTags: true,
+        fillColor: false,
+        
+        compid: "div",
+        idpool: {},
         
         ex: {
             htmlSkel: true,
@@ -60,6 +64,13 @@ $(document).ready(function() {
                 set: function(v) { this.dim = v ? 'ratio' : 'px'; }
             }
         },
+        
+        watch: {
+            compid: function(val) {
+                $("#compid").text(val);
+            }
+        },
+        
         methods: {
             buildCode: function() {
                 var map = buildHtml(this);
@@ -122,10 +133,14 @@ $(document).ready(function() {
             app.attributesView = ! app.attributesView; break;
         case 66: // B
             app.useRatioDim = ! app.useRatioDim; break;
-        case 90: // Z
-            app.toTheEnd = ! app.toTheEnd; break;
+        case 70: // F
+            app.fillColor = ! app.fillColor; break;
         case 82: // R
             app.roundCorner = ! app.roundCorner; break;
+        case 84: // T
+            app.showTags = ! app.showTags; break;
+        case 90: // Z
+            app.toTheEnd = ! app.toTheEnd; break;
         default:
             return;
         }
@@ -183,6 +198,19 @@ $(document).ready(function() {
         return false;
     });
     
+    function mkblock() {
+        var cid = app.compid;
+        var el = $("<div class='block'><span class='cid'>"
+                        + cid +"</span>");
+        // if (app.fillColor) ...
+        el.css("background", buildRandomHSL());
+        
+        var c = new CompId(cid);
+        app.compid = c.next().toString();
+        
+        return el;
+    }
+    
     $(".root").mousedown(function(e) {
         if (e.button != 0) return;
         
@@ -201,8 +229,7 @@ $(document).ready(function() {
                 block.addClass(dir);
                 block.data("dim", app.dim);
                 
-                var hdr = $("<" + app.tag + " class='block'><span class='name'>"
-                        + app.tag +"</span>");
+                var hdr = mkblock();
                 if (app.dim == 'ratio') {
                     hdr.data("val", 100);
                 } else {
@@ -226,8 +253,7 @@ $(document).ready(function() {
                 ratio = px / block.height();
             }
             
-            var newblk = $("<" + app.tag + " class='block'><span class='name'>"
-                + app.tag +"</span>");
+            var newblk = mkblock();
             newblk.insertAfter(block);
             
             var outer = block.parent();
@@ -305,11 +331,11 @@ $(document).ready(function() {
         switch (app.state) {
         case "select":
             var target = $(e.target);
-            if (target.hasClass("name")) {
-                var name = target.text();
-                var newName = prompt("Please enter a new composite id: ", name);
-                if (newName != null)
-                    target.text(newName);
+            if (target.hasClass("cid")) {
+                var cid = target.text();
+                var val = prompt("Please enter a new composite id: ", cid);
+                if (val != null)
+                    target.text(val);
                 return false;
             }
             break;
@@ -369,7 +395,7 @@ $(document).ready(function() {
     });
 
     $(".editable").inlineEdit();
-    $(".toolbox #compid").inlineEdit(function(e, s) { app.tag = s; });
+    $(".toolbox #compid").inlineEdit(function(e, s) { app.compid = s; });
     
     $("[data-control=multi] [data-var]").click(function(e) {
         var toggle = $(this).data("toggle");

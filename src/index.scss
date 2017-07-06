@@ -260,9 +260,17 @@ ul.div {
             &.round .block {
                 border-radius: 10px;
                 overflow: hidden;
-                > .name {
+                > .cid {
                     border-radius: 10px 0 0 0;
                 }
+            }
+            
+            &:not(.fillColor) .block {
+                background: none !important;
+            }
+            
+            &:not(.showTags) .cid {
+                display: none;
             }
         }
         
@@ -270,8 +278,12 @@ ul.div {
             display: flex;
             position: relative;
             
+            &:not(.root) {
+                // background: #def;
+            }
+            
             &.selected {
-                background-color: #fee;
+                background: #fee;
             }
             
             &.cols {
@@ -284,7 +296,7 @@ ul.div {
                 > .block { border-bottom: solid 1px gray; }
             }
             
-            > .name {
+            > .cid {
                 display: inline-block;
                 position: absolute;
                 padding: 1px;

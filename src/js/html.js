@@ -8,6 +8,58 @@
         return '<script type="text/javascript" src="' + url + '"></script>';
     }
     
+    var globalPool = {};
+    
+    window.CompId = function(s) {
+        this.cv = [];
+        var parts = breakStr(s, /[#.]/);
+        for (var i = 0; i < parts.length; i++) {
+            var part = parts[i];
+            switch (part.charAt(0)) {
+            case '#':
+                this.id = part.substr(1);
+                break;
+            case '.':
+                this.cv.push(part.substr(1));
+                break;
+            default: // TAG
+                this.tag = part;
+            }
+        }
+        
+        this.toString = function() {
+            var sb = this.tag;
+            if (this.id != null)
+                sb += "#" + this.id;
+            for (var i = 0; i < this.cv.length; i++)
+                sb += "." + this.cv[i];
+            return sb;
+        };
+        
+        this.next = function(pool) {
+            if (pool == null)
+                pool = globalPool;
+                
+            var id = "_";
+            if (this.id != null) id = this.id;
+            var NUM = /\d+/g;
+            var matcher;
+            var pre = id, post = '', val = 0;
+            while (matcher = NUM.exec(id)) {
+                pre = id.substr(0, matcher.index);
+                val = matcher[0] * 1;
+                post = id.substr(NUM.lastIndex);
+            }
+            val++;
+            var nextId = pre + val + post;
+            pool[pre] = val;
+            
+            var dup = $.extend({}, this);
+            dup.id = nextId;
+            return dup;
+        };
+    }
+        
     window.buildHtml = function(app) {
         var csslinks = "";                
         var scripts = "";
@@ -45,6 +97,7 @@
                 blocks.attr("data-dir", null);
                 blocks.attr("data-val", null);
                 blocks.removeClass("selected");
+                blocks.css("background", "");
             
             // clean up empty @class.
                 blocks.each(function() {
@@ -53,36 +106,32 @@
                 });
             
             // Parse compid => TAG#ID.CLASS...
-                $(".name", root).each(function() {
+                $(".cid", root).each(function() {
                     var compid = $(this).text();
                     var blk = $(this).parent();
-                    breakStr(compid, /[#.]/).forEach(function(part) {
-                        switch (part.charAt(0)) {
-                        case '#':
-                            var id = part.substr(1);
-                            blk.attr("id", id);
-                            
-                            // For named node, move @style* to <style>.
-                                var style = blk.attr("style");
-                                blk.attr("style", null);
-                                style = style.replace(/;\s*/mg, ";\n    ").trim();
-                                css += "#" + id + " {\n";
-                                css += "    " + style + "\n";
-                                css += "}\n";
-                            break;
-                        case '.':
-                            blk.addClass(part.substr(1));
-                            break;
-                        default: // TAG
-                            // blk.attr("x-tag", part);
-                            var newTag = $("<" + part + ">");
-                            newTag.append(blk.children());
-                            $.each(blk[0].attributes, function() {
-                                newTag.attr(this.name, this.value);
-                            });
-                            blk.replaceWith(newTag);
-                        }
-                    });
+                    var c = new CompId(compid);
+                    if (c.id != null) {
+                        blk.attr("id", c.id);
+                        
+                        // For named node, move @style* to <style>.
+                        var style = blk.attr("style");
+                        blk.attr("style", null);
+                        style = style.replace(/;\s*/mg, ";\n    ").trim();
+                        css += "#" + c.id + " {\n";
+                        css += "    " + style + "\n";
+                        css += "}\n";
+                    }
+                    for (i = 0; i < c.cv.length; i++)
+                        blk.addClass(c.cv[i]);
+                    if (c.tag != null && c.tag != 'div') {
+                        // blk.attr("x-tag", c.tag);
+                        var newTag = $("<" + c.tag + ">");
+                        newTag.append(blk.children());
+                        $.each(blk[0].attributes, function() {
+                            newTag.attr(this.name, this.value);
+                        });
+                        blk.replaceWith(newTag);
+                    }
                     $(this).detach();
                 });
             

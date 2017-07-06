@@ -93,9 +93,9 @@
             <ol>
                 <li>Optionally use sequential generated IDs.
                 <li>Slightly different backgrounds for different tags.
+                <li>Auto slide up the top bar after a short delay.
                 <li>A simple web server to login and upload artworks.
                 <li>Write the help manual.
-                
             </ol>
         </div>
         
@@ -127,7 +127,8 @@
                         <i class="fa fa-eraser"></i>
                         <span>Eraser</span>
                 </ul>
-                <div id="compid">div</div>
+                <div id="compid" title="Next element will created using this composite id.">
+                    div</div>
                 <ul class="span" k="toggles">
                     <li data-toggle="app.attributesView" :class="{ selected: attributesView }"
                         title="Toggle attributes palette.">
@@ -141,19 +142,26 @@
                     <li data-toggle="app.roundCorner" :class="{ selected: roundCorner }"
                         title="Show block borders with a small round corner.">
                         <i class="fa fa-circle-o"></i>
+                    <li data-toggle="app.showTags" :class="{ selected: showTags }"
+                        title="Display a small rectangular tag at the top left for each block.">
+                        <i class="fa fa-tags"></i>
+                    <li data-toggle="app.fillColor" :class="{ selected: fillColor }"
+                        title="Fill random colors of low saturation in the blocks..">
+                        <i class="fa fa-th"></i>
                 </ul>
             </div>
             
-            <div :class="{ root: 1, block: 1, cols: 1, round: roundCorner }"
+            <div :class="{ root: 1, block: 1, cols: 1, round: roundCorner,
+                    showTags: showTags, fillColor: fillColor }"
                     data-dir="cols" data-dim="ratio">
                 <div style="flex: 15" class="block" data-val="15">
-                    <div class="name">ul#left</div>
+                    <div class="cid">ul#left</div>
                 </div>
                 <div style="flex: 70" class="block" data-val="70">
-                    <div class="name">div</div>
+                    <div class="cid">div</div>
                 </div>
                 <div style="flex: 15" class="block" data-val="15">
-                    <div class="name">#right</div>
+                    <div class="cid">#right</div>
                 </div>
             </div>
         </div>
@@ -221,6 +229,7 @@
     </div>
     
     <script type="text/javascript" src="js/clipboard.js"></script>
+    <script type="text/javascript" src="js/css.js"></script>
     <script type="text/javascript" src="js/html.js"></script>
     <script type="text/javascript" src="js/inlineEdit.js"></script>
     <script type="text/javascript" src="js/strfn.js"></script>
