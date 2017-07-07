@@ -179,17 +179,27 @@
                 </ul>
             </div>
             
-            <div :class="{ root: 1, block: 1, cols: 1, round: roundCorner,
+            <div :class="{ root: 1, block: 1, rows: 1, round: roundCorner,
                     showTags: showTags, fillColor: fillColor }"
-                    data-dir="cols" data-dim="ratio">
-                <div style="flex: 15" class="block" data-val="15">
-                    <div class="cid">ul#left</div>
+                    data-dir="rows" data-dim="ratio">
+
+                <div style="flex: 13 1 0" class="block" data-val="13">
+                    <span class="cid">#top</span>
                 </div>
-                <div style="flex: 70" class="block" data-val="70">
-                    <div class="cid">div</div>
+                <div style="flex: 74 1 0" class="block cols" data-dim="ratio" data-dir="cols" data-val="74">
+                    <span class="cid">#main</span>
+                    <div style="flex: 12 1 0" class="block" data-val="12">
+                        <span class="cid">#left</span>
+                    </div>
+                    <div style="flex: 76 1 0" class="block" data-val="76">
+                        <span class="cid">#content</span>
+                    </div>
+                    <div style="flex: 12 1 0" class="block" data-val="12">
+                        <span class="cid">#right</span>
+                    </div>
                 </div>
-                <div style="flex: 15" class="block" data-val="15">
-                    <div class="cid">#right</div>
+                <div style="flex: 13 1 0" class="block" data-val="13">
+                    <span class="cid">#bottom</span>
                 </div>
             </div>
         </div>

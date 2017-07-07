@@ -96,8 +96,8 @@ $(document).ready(function() {
                 var iframe = $("[k=preview] iframe")[0];
                     // IE7: contentDocument not work.
                     var iframedoc = iframe.contentWindow.document;
-                    // iframedoc.documentElement.innerHTML = html;
-                    iframedoc.write(map.html);
+                    iframedoc.documentElement.innerHTML = map.html;
+                    // iframedoc.write(map.html);
                     
                 return sb;
             },
