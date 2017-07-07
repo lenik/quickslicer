@@ -1,6 +1,4 @@
 // -*- css -*-
-@import "config.scss";
-@import "ZwkFn.scss";
 
 .dbg * {
     border: solid 1px #ccc;
@@ -82,6 +80,15 @@ ul.div {
         display: inline-block;
         padding: .1em .4em;
     }
+}
+
+.kbd {
+    display: inline-block; 
+    padding: 3px 5px;
+    margin: 3px;
+    border: solid 1px #000;
+    background: #eee;
+    font-family: Sans;
 }
 
 .palette {
