@@ -272,7 +272,7 @@ ul.div {
                 }
             }
             
-            &:not(.fillColor) .block {
+            &:not(.fillColor) .block:not(.selected) {
                 background: none !important;
             }
             
@@ -290,7 +290,7 @@ ul.div {
             }
             
             &.selected {
-                background: #fee;
+                background: #fee !important;
             }
             
             &.cols {
