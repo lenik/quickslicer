@@ -8,6 +8,14 @@
         
         <script type="text/javascript" src="libjs/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="libjs/vuejs/vue.min.js"></script>
+
+        <script type="text/javascript" src="js/clipboard.js"></script>
+        <script type="text/javascript" src="js/css.js"></script>
+        <script type="text/javascript" src="js/html.js"></script>
+        <script type="text/javascript" src="js/inlineEdit.js"></script>
+        <script type="text/javascript" src="js/strfn.js"></script>
+        <script type="text/javascript" src="libjs/tidy.js"></script>
+        <script type="text/javascript" src="index.js"></script>
     </head>
 <body class="clear-each">
     
@@ -124,6 +132,12 @@
                 <li>Auto slide up the top bar after a short delay.
                 <li>A simple web server to login and upload artworks.
                 <li>Write the help manual.
+                <li>Line thickness 1/2/3 switcher. dash also.
+                <li>Clean up data-dim, data-dir, which can be inferred from css.
+                <li>Save/Load sketches for later editing.
+                <li>Resize block (in one direction), optionally in mode/elastic mode.
+                <li>Align to the grid, and snap to the grid.
+                <li>Optionally display the numbers.
             </ol>
         </div>
         
@@ -268,19 +282,10 @@
         <div class="copyright" style="flex: 50">
             (ↄ) Jun 2017 @_lenik
         </div>
-        <div style="flex: 50">
-            <script>document.write(sc_script);</script>
-            <noscript><img class="statcounter" src="//c.statcounter.com/11389146/0/cb1bef8f/0/"></noscript>
+        <div id="statcounter" style="flex: 50">
+            <script>installStatCounter();</script>
         </div>
     </div>
-    
-    <script type="text/javascript" src="js/clipboard.js"></script>
-    <script type="text/javascript" src="js/css.js"></script>
-    <script type="text/javascript" src="js/html.js"></script>
-    <script type="text/javascript" src="js/inlineEdit.js"></script>
-    <script type="text/javascript" src="js/strfn.js"></script>
-    <script type="text/javascript" src="libjs/tidy.js"></script>
-    <script type="text/javascript" src="index.js"></script>
     
 </body>
 </html>
