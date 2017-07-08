@@ -1,4 +1,6 @@
 // require: scripting
+// require: inlineEdit
+// require: setup of Vue.
 
 $(document).ready(function() {
 
