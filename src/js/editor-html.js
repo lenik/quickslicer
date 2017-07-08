@@ -82,8 +82,9 @@
         if (app.libjs.vuejs)
             scripts += '        ' + script("libjs/vuejs/vue.js") + '\n';
         
-        var title = $("#projbar h2").text();
-        var subtitle = $("#projbar .subtitle").text();
+        var title = $("#proj-info h2").text();
+        var subtitle = $("#proj-info .subtitle").text().replace(/\s+/g, " ").trim();
+        var generator = "Quick Slicer " + app.version;
         
         var root = $(".root").clone();
         var body = "";
@@ -159,6 +160,8 @@
         var html = "";
             html += sk1;
             html += "        <title>" + title + "</title>\n";
+            html += "        <meta name=\"description\" content=\"" + subtitle + "\">\n";
+            html += "        <meta name=\"generator\" content=\"" + generator + "\">\n";
             html += csslinks;
             html += scripts;
             html += sk2;

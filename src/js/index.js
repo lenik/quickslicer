@@ -1,7 +1,7 @@
 $(document).ready(function() {
     
     appModel = {
-        version: '1.0',
+        version: '1.1',
         
         view: 'editor',
         state: 'select',
