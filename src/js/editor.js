@@ -23,12 +23,13 @@ $(document).ready(function() {
         case "horiz":
         case "vert":
             var isVert = app.state == "vert";
-            var dir = isVert ? "cols" : "rows";
-            if (block.parent().data("dir") != dir)
+            var dir = isVert ? "row" : "column";
+            if (! block.parent().hasClass("dir-" + dir))
                 reset = true;
             if (reset) {
-                block.data("dir", dir);
-                block.addClass(dir);
+                block.removeClass("dir-row");
+                block.removeClass("dir-column");
+                block.addClass("dir-" + dir);
                 block.data("dim", app.dim);
                 
                 var hdr = mkblock();

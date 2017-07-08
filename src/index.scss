@@ -156,6 +156,10 @@
                     border-radius: 10px 0 0 0;
                 }
             }
+
+            &.fillColor .block {
+                border: none !important;
+            }
             
             &:not(.fillColor) .block:not(.selected) {
                 background: none !important;
@@ -178,12 +182,12 @@
                 background: #fee !important;
             }
             
-            &.cols {
+            &.dir-row {
                 flex-direction: row;
                 > .block { border-right: solid 1px gray; }
             }
             
-            &.rows {
+            &.dir-column {
                 flex-direction: column;
                 > .block { border-bottom: solid 1px gray; }
             }

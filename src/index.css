@@ -111,6 +111,8 @@
     overflow: hidden; }
     #views > [k=editor] .root.round .block > .cid {
       border-radius: 10px 0 0 0; }
+  #views > [k=editor] .root.fillColor .block {
+    border: none !important; }
   #views > [k=editor] .root:not(.fillColor) .block:not(.selected) {
     background: none !important; }
   #views > [k=editor] .root:not(.showTags) .cid {
@@ -120,13 +122,13 @@
   position: relative; }
   #views > [k=editor] .block.selected {
     background: #fee !important; }
-  #views > [k=editor] .block.cols {
+  #views > [k=editor] .block.dir-row {
     flex-direction: row; }
-    #views > [k=editor] .block.cols > .block {
+    #views > [k=editor] .block.dir-row > .block {
       border-right: solid 1px gray; }
-  #views > [k=editor] .block.rows {
+  #views > [k=editor] .block.dir-column {
     flex-direction: column; }
-    #views > [k=editor] .block.rows > .block {
+    #views > [k=editor] .block.dir-column > .block {
       border-bottom: solid 1px gray; }
   #views > [k=editor] .block > .cid {
     display: inline-block;

@@ -1,7 +1,7 @@
 $(document).ready(function() {
     
     appModel = {
-        version: '1.1',
+        version: '1.2',
         
         view: 'editor',
         state: 'select',
@@ -89,6 +89,7 @@ $(document).ready(function() {
         }
     });
     
+    new Vue({ el: "#view-nav", data: app });
     new Vue({ el: "#proj-info", data: app });
     new Vue({ el: "#attrviews", data: app });
     
@@ -101,25 +102,31 @@ $(document).ready(function() {
         case 27: // ESC
         case 32: // SPC
             app.init('select'); break;
-        case 72: // H
-            app.init("horiz"); break;
-        case 86: // V
-            app.init("vert"); break;
-        case 79: // O
-            app.init("offset"); break;
-        case 46: // DEL
-        case 69: // E
-            app.init("erase"); break;
         case 65: // A
             app.attributesView = ! app.attributesView; break;
         case 66: // B
             app.useRatioDim = ! app.useRatioDim; break;
+        case 67: // C
+            app.showTags = ! app.showTags; break;
+        case 46: // DEL
+        case 68: // D
+            app.init("erase"); break;
+        case 69: // E
+            app.view = "editor"; break;
         case 70: // F
             app.fillColor = ! app.fillColor; break;
+        case 72: // H
+            app.init("horiz"); break;
+        case 79: // O
+            app.init("offset"); break;
         case 82: // R
             app.roundCorner = ! app.roundCorner; break;
-        case 84: // T
-            app.showTags = ! app.showTags; break;
+        case 83: // S
+            app.view = "options"; break;
+        case 86: // V
+            app.init("vert"); break;
+        case 88: // X
+            app.view = "export"; break;
         case 90: // Z
             app.toTheEnd = ! app.toTheEnd; break;
         default:

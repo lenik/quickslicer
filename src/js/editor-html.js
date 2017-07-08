@@ -66,8 +66,8 @@
         var css = "*:not(body) { border: solid 1px gray; }\n"
             + ".block { position: relative; display: flex; }\n"
             + ".root { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }\n"
-            + ".rows { flex-direction: column; }\n"
-            + ".cols { flex-direction: row; }\n"
+            + ".dir-column { flex-direction: column; }\n"
+            + ".dir-row { flex-direction: row; }\n"
             ;
         var scss = "";
         if (app.libjs.bootstrap) {
@@ -95,7 +95,6 @@
             
             // clean up internal attributes.
                 blocks.attr("data-dim", null);
-                blocks.attr("data-dir", null);
                 blocks.attr("data-val", null);
                 blocks.removeClass("selected");
                 blocks.css("background", "");

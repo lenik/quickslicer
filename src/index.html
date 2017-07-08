@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="index.css">
         
         <script type="text/javascript" src="libjs/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="libjs/vuejs/vue.min.js"></script>
+        <script type="text/javascript" src="libjs/vuejs/vue.js"></script>
         <script type="text/javascript" src="libjs/misc/tidy.js"></script>
         
         <script type="text/javascript" src="libjs/lenik/clipboard.js"></script>
@@ -87,17 +87,17 @@
     </div>
     
     <nav id="view-nav">
-        <a href='about'><i class="fa fa-info"></i>
+        <a href='about' :class="{ selected: view=='about' }"><i class="fa fa-info"></i>
             About</a>
-        <a href='options'><i class="fa fa-cog"></i>
+        <a href='options' :class="{ selected: view=='options' }"><i class="fa fa-cog"></i>
             Options</a>
-        <a href='editor' class="selected"><i class="fa fa-crop"></i>
+        <a href='editor' :class="{ selected: view=='editor' }"><i class="fa fa-crop"></i>
             Editor</a>
-        <a href='preview'><i class="fa fa-eye"></i>
+        <a href='preview' :class="{ selected: view=='preview' }"><i class="fa fa-eye"></i>
             Preview</a>
-        <a href='export'><i class="fa fa-save"></i>
+        <a href='export' :class="{ selected: view=='export' }"><i class="fa fa-save"></i>
             Export</a>
-        <a href='dom'><i class="fa fa-sitemap"></i>
+        <a href='dom' :class="{ selected: view=='dom' }"><i class="fa fa-sitemap"></i>
             Document</a>
     </nav>
     
@@ -117,7 +117,7 @@
                     Draw <b>Vertical Line</b>.
                 <li><b class="kbd">O</b>: 
                     Create <b>Offset Inside</b>.
-                <li><b class="kbd">E</b>/<b class="kbd">Delete</b>: 
+                <li><b class="kbd">Delete</b>/<b class="kbd">D</b>: 
                     Switch to <b>Erase</b> mode.
                 <li><b class="kbd">A</b>: 
                     Toggle <b>Attributes View</b> palette.
@@ -127,17 +127,22 @@
                     Switch the <b>Fill Color</b> for blocks.
                 <li><b class="kbd">R</b>: 
                     Toggle <b>Round Corner</b> mode for blocks.
-                <li><b class="kbd">T</b>: 
+                <li><b class="kbd">C</b>: 
                     Toggle the display of <b>Composite Id</b> tag at top-left of each block.
                 <li><b class="kbd">Z</b>: 
                     Toggle dimension measurement between <b>from the start</b> and <b>to the end</b>.
+                <li><b class="kbd">S</b>: 
+                    Switch to <i>Options</i> view.
+                <li><b class="kbd">E</b>: 
+                    Switch to <i>Editor</i> view.
+                <li><b class="kbd">X</b>: 
+                    Switch to <i>Export</i> view.
             </ul>
             
             <h3>TODO</h3>
             <ol>
                 <li>A simple web server to login and upload artworks.
                 <li>Write the help manual.
-                <li>Clean up data-dim, data-dir, which can be inferred from css.
                 <li>Save/Load sketches for later editing.
                 <li>Resize block (in one direction), optionally in strict/elastic mode.
             </ol>
@@ -149,11 +154,12 @@
             <ul>
                 <li>Slightly different backgrounds for different tags.
                 <li>Show bounding boxes in the preview.
-                <li>Fill random colors of low saturation in the blocks.
+                    - or Fill random colors of low saturation in the blocks.
                 <li>For generated _*, export to indiced selector or embedded.
                 <li>Display the dimension numbers when placing lines.
                 <li>Align to the grid, and snap to the grid.
                 <li>Line thickness 1/2/3 switcher. dash also.
+                <li>Prefix to css selector names.
             </ul>
         </div>
         
@@ -200,14 +206,14 @@
                 </ul>
             </div>
             
-            <div :class="{ root: 1, block: 1, rows: 1, round: roundCorner,
+            <div :class="{ root: 1, block: 1, 'dir-column': 1, round: roundCorner,
                     showTags: showTags, fillColor: fillColor }"
-                    data-dir="rows" data-dim="ratio">
+                    data-dim="ratio">
 
                 <div style="flex: 13 1 0" class="block" data-val="13">
                     <span class="cid">#top</span>
                 </div>
-                <div style="flex: 74 1 0" class="block cols" data-dim="ratio" data-dir="cols" data-val="74">
+                <div style="flex: 74 1 0" class="block dir-row" data-dim="ratio" data-val="74">
                     <span class="cid">#main</span>
                     <div style="flex: 12 1 0" class="block" data-val="12">
                         <span class="cid">#left</span>
