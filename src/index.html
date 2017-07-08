@@ -8,18 +8,19 @@
         <link rel="stylesheet" type="text/css" href="index.css">
         
         <script type="text/javascript" src="libjs/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="libjs/vuejs/vue.js"></script>
+        <script type="text/javascript" src="libjs/vuejs/vue.min.js"></script>
         <script type="text/javascript" src="libjs/misc/tidy.js"></script>
         
+        <script type="text/javascript" src="js/index-model.js"></script>
         <script type="text/javascript" src="libjs/lenik/clipboard.js"></script>
         <script type="text/javascript" src="libjs/lenik/css.js"></script>
+        <script type="text/javascript" src="libjs/lenik/datacontrol.js"></script>
         <script type="text/javascript" src="libjs/lenik/inlineEdit.js"></script>
         <script type="text/javascript" src="libjs/lenik/scripting.js"></script>
         <script type="text/javascript" src="libjs/lenik/strfn.js"></script>
         <script type="text/javascript" src="skel/skel.js"></script>
         <script type="text/javascript" src="skel/site-supp.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript" src="libjs/lenik/datacontrol.js"></script>
         <script type="text/javascript" src="js/editor.js"></script>
         <script type="text/javascript" src="js/editor-html.js"></script>
     </head>
@@ -206,9 +207,7 @@
                 </ul>
             </div>
             
-            <div :class="{ root: 1, block: 1, 'dir-column': 1, round: roundCorner,
-                    showTags: showTags, fillColor: fillColor }"
-                    data-dim="ratio">
+            <div class="root block dir-column extra showTags" data-dim="ratio">
 
                 <div style="flex: 13 1 0" class="block" data-val="13">
                     <span class="cid">#top</span>

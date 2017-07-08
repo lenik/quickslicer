@@ -1,10 +1,6 @@
 $(document).ready(function() {
     
     $("#view-nav > a").click(function(e) {
-        var item = $(this);
-        item.siblings().removeClass("selected");
-        item.addClass("selected");
-        
         var k = $(this).attr('href');
         app.view = k;
         return false;
