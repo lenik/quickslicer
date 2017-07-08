@@ -22,7 +22,9 @@ function writeVar(path, value, start) {
 $(document).ready(function() {
     
     appModel = {
-        facet: 'editor',
+        version: '1.0',
+        
+        view: 'editor',
         state: 'select',
         attributesView: false,
         dim: 'ratio',
@@ -56,7 +58,7 @@ $(document).ready(function() {
     };
 
     app = new Vue({
-        el: "#facets",
+        el: "#views",
         data: appModel,
         computed: {
             useRatioDim: {
@@ -108,7 +110,7 @@ $(document).ready(function() {
         }
     });
     
-    new Vue({ el: "#projbar", data: app });
+    new Vue({ el: "#proj-info", data: app });
     new Vue({ el: "#attrviews", data: app });
     
     $(document.body).keydown(function (e) {
@@ -188,13 +190,13 @@ $(document).ready(function() {
         });
     }
     
-    $("#proj-pager > a").click(function(e) {
+    $("#view-nav > a").click(function(e) {
         var item = $(this);
         item.siblings().removeClass("selected");
         item.addClass("selected");
         
         var k = $(this).attr('href');
-        app.facet = k;
+        app.view = k;
         return false;
     });
     
@@ -417,6 +419,27 @@ $(document).ready(function() {
     $("#copy-btn").click(function() {
         var code = $("#code").text();
         Clipboard.set(code);
+    });
+    
+    var hideTop = function() {
+        $("#proj-info").slideUp({
+            done: function() {
+                $("#top").addClass("hide");
+            }
+        });
+        $("#footbar").fadeOut();
+    };
+
+    var hTimeout;
+    hTimeout = setTimeout(hideTop, 3000);
+    $("#top").hover(function() {
+        clearTimeout(hTimeout);
+        hTimeout = null;
+        $("#top").removeClass("hide");
+        $("#proj-info").fadeIn();
+        $("#footbar").fadeIn();
+    }, function() {
+        hTimeout = setTimeout(hideTop, 2000);
     });
     
 });
