@@ -1,3 +1,5 @@
+// require: jquery
+
 (function($) {
 
     var input = $('<input class="inlineEdit" type="text" />');

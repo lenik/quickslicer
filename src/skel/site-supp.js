@@ -1,8 +1,8 @@
-var sc_project = 11389146;
-var sc_invisible = 0;
-var sc_security = "cb1bef8f";
+function installStatCounter(p, i, s) {
+    window.sc_project = 11389146;
+    window.sc_invisible = 0;
+    window.sc_security = "cb1bef8f";
 
-function installStatCounter() {
     var url;
     switch (document.location.protocol) {
         case "file:":

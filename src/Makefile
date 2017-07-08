@@ -18,3 +18,8 @@ auto-build:
 	    -f inc \
         make
 
+templatedir=/mnt/istore/job/index/p170630
+sync-skel:
+	rsync -amv --delete ${templatedir}/libjs/* libjs
+	rsync -amv --delete ${templatedir}/skel/* skel
+
